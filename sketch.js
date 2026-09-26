@@ -2,9 +2,9 @@ const r = require("raylib");
 const g = require("./geometry")
 
 const TITLE = "Particle Detector"
-const WIDTH = 701;
+const WIDTH = 710;
 const HEIGHT = 600;
-const FPS = 60;
+const FPS = 30;
 
 let scannerX = 0;
 const scannerY = 0;
@@ -12,18 +12,23 @@ const scannerWidth = 50;
 const scannerHeight = HEIGHT;
 let scannerSpeed = 3;
 
-const parFieldX = 200;
-const parFieldY = 0;
-const parFieldWidth = 100;
-const parFieldHeight = HEIGHT;
+const particle1X = 400;
+const particle1Y = 0;
+const particle1Width = 100;
+const particle1Height = HEIGHT;
+
+const particle2X = 100;
+const particle2Y = 0;
+const particle2Width = 50;
+const particle2Height = HEIGHT;
 
 
-function isOverlape() {
+function isOverlap() {
 
-    const isParRange = g.isInBoundary(parFieldX, scannerX, scannerWidth);
-    const isScannerRange = g.isInBoundary(scannerX, parFieldX, parFieldWidth);
+    const isPar1InRange = g.isInRange(particle1X, particle1Width, scannerX, scannerWidth);
+    const isPar2InRange = g.isInRange(particle2X, particle2Width, scannerX, scannerWidth);
 
-    return isParRange && isScannerRange;
+    return isPar1InRange || isPar2InRange;
 }
 
 function running() {
@@ -39,18 +44,22 @@ function update() {
 
     scannerX += scannerSpeed;
 
-    if ((scannerX + scannerWidth === WIDTH) || (scannerX === 0)) {
+    if ((scannerX + scannerWidth >= WIDTH) || (scannerX === 0)) {
         scannerSpeed = -scannerSpeed;
     }
+
 }
 
 function draw() {
-    const scannerColor = isOverlape() ? r.RED : r.WHITE;
+
+    const scannerColor = isOverlap() ? r.RED : r.WHITE;
 
     r.BeginDrawing();
     r.ClearBackground(r.BLACK)
 
-    r.DrawRectangle(parFieldX, parFieldY, parFieldWidth, parFieldHeight, r.BLUE)
+    r.DrawRectangle(particle1X, particle1Y, particle1Width, particle1Height, r.BLUE)
+    r.DrawRectangle(particle2X, particle2Y, particle2Width, particle2Height, r.BLUE)
+
     r.DrawRectangle(scannerX, scannerY, scannerWidth, scannerHeight, scannerColor)
 
     r.EndDrawing();
