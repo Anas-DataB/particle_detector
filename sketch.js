@@ -7,10 +7,12 @@ const HEIGHT = 600;
 const FPS = 60;
 const partedX = WIDTH / 2;
 
-const vParticle1X = 0;
-const vParticle1Width = WIDTH;
-const vParticle1Height = 100;
-const vParticle1Y = 500;
+const vParticle1Y = 200;
+
+let vScanner1Y = 0;
+let vScannerSpeed = 3;
+const vScanner1Height = 30;
+
 
 let scanner1X = 0;
 let scanner1Speed = 1;
@@ -18,10 +20,16 @@ let scanner1Speed = 1;
 let scanner2X = partedX;
 let scanner2Speed = 3;
 
-
-
 const scanner1Width = 50;
 const scanner2Width = 50;
+
+function setColor(isdetected) {
+    return isdetected ? r.ColorAlpha(r.RED, 0.7) : r.WHITE;
+}
+
+function setSpeed(scannerX, scannerWidth, leftLimit, rightLimit, speed) {
+    return g.boundryHit(scannerX, scannerWidth, leftLimit, rightLimit) ? -speed : speed;
+}
 
 function isOverlap(scanner, scannerWidth, particle1x, particle1Width, particle2x, particle2Width) {
 
@@ -46,12 +54,12 @@ function update() {
     scanner1X += scanner1Speed;
     scanner2X += scanner2Speed;
 
-    if (g.boundryHit(scanner1X, scanner1Width, 0, partedX))
-        scanner1Speed = -scanner1Speed;
+    vScanner1Y += vScannerSpeed;
 
-    if ((g.boundryHit(scanner2X, scanner2Width, partedX, WIDTH))) {
-        scanner2Speed = -scanner2Speed;
-    }
+    scanner1Speed = setSpeed(scanner1X, scanner1Width, 0, partedX, scanner1Speed)
+    scanner2Speed = setSpeed(scanner2X, scanner2Width, partedX, WIDTH, scanner2Speed)
+
+    vScannerSpeed = setSpeed(vScanner1Y, vScanner1Height, 0, HEIGHT, vScannerSpeed)
 
 }
 
@@ -72,11 +80,21 @@ function draw() {
     const particle2Width = 50;
     const particle2Height = HEIGHT;
 
+    const vScanner1X = 0;
+    const vScanner1Width = WIDTH;
+
+    const vParticle1X = 0;
+    const vParticle1Width = WIDTH;
+    const vParticle1Height = 100;
+
     const isScanner1Detect = isOverlap(scanner1X, scanner1Width, particle1X, particle1Width, particle2X, particle2Width);
     const isScanner2Detect = isOverlap(scanner2X, scanner2Width, particle1X, particle1Width, particle2X, particle2Width);
 
-    const scanner1Color = isScanner1Detect ? r.RED : r.WHITE;
-    const scanner2Color = isScanner2Detect ? r.RED : r.WHITE;
+    const vScannerDetect = isOverlap(vScanner1Y, vScanner1Height, vParticle1Y, vParticle1Height);
+
+    const scanner1Color = setColor(isScanner1Detect)
+    const scanner2Color = setColor(isScanner2Detect)
+    const vScanner1Color = setColor(vScannerDetect)
 
     r.BeginDrawing();
     r.ClearBackground(r.BLACK)
@@ -89,6 +107,9 @@ function draw() {
 
     r.DrawRectangle(scanner1X, scanner1Y, scanner1Width, scanner1Height, scanner1Color);
     r.DrawRectangle(scanner2X, scanner2Y, scanner2Width, scanner2Height, scanner2Color)
+
+
+    r.DrawRectangle(vScanner1X, vScanner1Y, vScanner1Width, vScanner1Height, vScanner1Color)
 
     r.EndDrawing();
 }
