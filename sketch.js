@@ -5,17 +5,24 @@ const WIDTH = 701;
 const HEIGHT = 600;
 const FPS = 60;
 
-let rectX = 0;
-const rectY = 0;
-const rectWidth = 20;
-const rectHeight = WIDTH;
-let rectSpeed = 3;
+let scannerX = 0;
+const scannerY = 0;
+const scannerWidth = 50;
+const scannerHeight = HEIGHT;
+let scannerSpeed = 3;
 
-const partFieldX = 200;
-const partFieldY = 0;
-const partFieldWidth = 50;
-const partFieldHeight = HEIGHT;
+const parFieldX = 200;
+const parFieldY = 0;
+const parFieldWidth = 100;
+const parFieldHeight = HEIGHT;
 
+
+function isOverlape() {
+    const isParRange = parFieldX <= scannerX + scannerWidth;
+    const isScannerRange = scannerX <= parFieldWidth + parFieldX;
+
+    return isParRange && isScannerRange;
+}
 
 function running() {
     return !r.WindowShouldClose();
@@ -28,19 +35,21 @@ function setup() {
 
 function update() {
 
-    rectX += rectSpeed;
+    scannerX += scannerSpeed;
 
-    if ((rectX + rectWidth === WIDTH) || (rectX === 0)) {
-        rectSpeed = -rectSpeed;
+    if ((scannerX + scannerWidth === WIDTH) || (scannerX === 0)) {
+        scannerSpeed = -scannerSpeed;
     }
 }
 
 function draw() {
+    const scannerColor = isOverlape() ? r.RED : r.WHITE;
+
     r.BeginDrawing();
     r.ClearBackground(r.BLACK)
 
-    r.DrawRectangle(partFieldX, partFieldY, partFieldWidth, partFieldHeight, r.BLUE)
-    r.DrawRectangle(rectX, rectY, rectWidth, rectHeight, r.WHITE)
+    r.DrawRectangle(parFieldX, parFieldY, parFieldWidth, parFieldHeight, r.BLUE)
+    r.DrawRectangle(scannerX, scannerY, scannerWidth, scannerHeight, scannerColor)
 
     r.EndDrawing();
 }
