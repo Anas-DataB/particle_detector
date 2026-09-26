@@ -7,12 +7,18 @@ const HEIGHT = 600;
 const FPS = 60;
 const partedX = WIDTH / 2;
 
+const vParticle1X = 0;
+const vParticle1Width = WIDTH;
+const vParticle1Height = 100;
+const vParticle1Y = 500;
 
 let scanner1X = 0;
 let scanner1Speed = 1;
 
 let scanner2X = partedX;
 let scanner2Speed = 3;
+
+
 
 const scanner1Width = 50;
 const scanner2Width = 50;
@@ -77,6 +83,9 @@ function draw() {
 
     r.DrawRectangle(particle1X, particle1Y, particle1Width, particle1Height, r.BLUE)
     r.DrawRectangle(particle2X, particle2Y, particle2Width, particle2Height, r.BLUE)
+
+    r.DrawRectangle(vParticle1X, vParticle1Y, vParticle1Width, vParticle1Height, r.BLUE)
+
 
     r.DrawRectangle(scanner1X, scanner1Y, scanner1Width, scanner1Height, scanner1Color);
     r.DrawRectangle(scanner2X, scanner2Y, scanner2Width, scanner2Height, scanner2Color)
