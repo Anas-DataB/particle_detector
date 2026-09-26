@@ -1,4 +1,5 @@
 const r = require("raylib");
+const g = require("./geometry")
 
 const TITLE = "Particle Detector"
 const WIDTH = 701;
@@ -18,8 +19,9 @@ const parFieldHeight = HEIGHT;
 
 
 function isOverlape() {
-    const isParRange = parFieldX <= scannerX + scannerWidth;
-    const isScannerRange = scannerX <= parFieldWidth + parFieldX;
+
+    const isParRange = g.isInBoundary(parFieldX, scannerX, scannerWidth);
+    const isScannerRange = g.isInBoundary(scannerX, parFieldX, parFieldWidth);
 
     return isParRange && isScannerRange;
 }
