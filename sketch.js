@@ -1,19 +1,43 @@
 const r = require("raylib");
 
+const TITLE = "Particle Detector"
+const WIDTH = 701;
+const HEIGHT = 600;
+const FPS = 60;
+
+let rectX = 0;
+const rectY = 0;
+const rectWidth = 20;
+const rectHeight = WIDTH;
+let rectSpeed = 3;
+
+
+
 function running() {
     return !r.WindowShouldClose();
 }
 
 function setup() {
-    // prepare the sketch
+    r.InitWindow(WIDTH, HEIGHT, TITLE,)
+    r.SetTargetFPS(FPS)
 }
 
 function update() {
-    // change the state
+
+    rectX += rectSpeed;
+
+    if ((rectX + rectWidth === WIDTH) || (rectX === 0)) {
+
+        rectSpeed = -rectSpeed;
+
+    }
 }
 
 function draw() {
-    // draw the current state
+    r.BeginDrawing();
+    r.ClearBackground(r.BLACK)
+    r.DrawRectangle(rectX, rectY, rectWidth, rectHeight, r.WHITE)
+    r.EndDrawing();
 }
 
 function teardown() {
