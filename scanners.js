@@ -23,6 +23,10 @@ const vScannerWidth = WIDTH;
 const vScannerHeight = 30;
 let vScannerVelocity = 3;
 
+let isvScannerDetect;
+let isScanner2Detect;
+let isScanner1Detect;
+
 module.exports = {
     scanner1X,
     scanner1Y,
@@ -39,5 +43,8 @@ module.exports = {
     vScannerWidth,
     vScannerHeight,
     vScannerVelocity,
+    isvScannerDetect,
+    isScanner2Detect,
+    isScanner1Detect,
 }
 

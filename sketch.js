@@ -7,12 +7,11 @@ const WIDTH = 710;
 const HEIGHT = 600;
 const partedX = WIDTH / 2;
 
-let colorScanner1 = r.WHITEl;
-let colorScanner2 = r.WHITEl;
+let colorScanner1 = r.WHITE;
+let colorScanner2 = r.WHITE;
 let color_vScanner = r.WHITE;
 
 function isParticleDetected(scanner, scannerWidth, particle1x, particle1Width, particle2x, particle2Width) {
-
     const isPar1InRange = d.isOverlap(particle1x, particle1Width, scanner, scannerWidth);
     const isPar2InRange = d.isOverlap(particle2x, particle2Width, scanner, scannerWidth);
 
@@ -35,29 +34,35 @@ function setup() {
     r.InitWindow(WIDTH, HEIGHT, TITLE,)
     r.SetTargetFPS(FPS)
 }
-
+function move(start, velocity) {
+    return start + velocity
+}
 function update() {
 
-    s.scanner1X += s.scanner1Velocity;
-    s.scanner2X += s.scanner2Velocity;
+    s.scanner1X = move(s.scanner1X, s.scanner1Velocity)
+    s.scanner2X = move(s.scanner2X, s.scanner2Velocity);
 
-    s.vScannerY += s.vScannerVelocity;
+    s.vScannerY = move(s.vScannerY, s.vScannerVelocity);
 
     s.scanner1Velocity = d.setVelocity(s.scanner1X, s.scanner1Width, 0, partedX, s.scanner1Velocity)
     s.scanner2Velocity = d.setVelocity(s.scanner2X, s.scanner2Width, partedX, WIDTH, s.scanner2Velocity)
 
     s.vScannerVelocity = d.setVelocity(s.vScannerY, s.vScannerHeight, 0, HEIGHT, s.vScannerVelocity)
 
-    const isScanner1Detect = isParticleDetected(s.scanner1X, s.scanner1Width, p.particle1X, p.particle1Width, p.particle2X, p.particle2Width);
-    const isScanner2Detect = isParticleDetected(s.scanner2X, s.scanner2Width, p.particle1X, p.particle1Width, p.particle2X, p.particle2Width);
-
-    const vScannerDetect = d.isOverlap(s.vScannerY, s.vScannerHeight, p.vParticleY, p.vParticleHeight);
-
-    colorScanner1 = setColor(isScanner1Detect)
-    colorScanner2 = setColor(isScanner2Detect)
-    color_vScanner = setColor(vScannerDetect);
+    s.isvScannerDetect = d.isOverlap(s.vScannerY, s.vScannerHeight, p.vParticleY, p.vParticleHeight);
+    s.isScanner2Detect = isParticleDetected(s.scanner2X, s.scanner2Width, p.particle1X, p.particle1Width, p.particle2X, p.particle2Width);
+    s.isScanner1Detect = isParticleDetected(s.scanner1X, s.scanner1Width, p.particle1X, p.particle1Width, p.particle2X, p.particle2Width);
 
 }
+function drawScanner(x, y, width, height, isdetected) {
+    if (isdetected) {
+        r.DrawRectangleRounded(r.Rectangle(x, y, width, height), 20, 4, r.RED,);
+    }
+    else {
+        r.DrawRectangle(x, y, width, height, r.ColorAlpha(r.RED, 0.7))
+    }
+}
+
 function draw() {
 
     r.BeginDrawing();
@@ -69,11 +74,11 @@ function draw() {
     r.DrawRectangle(p.vParticleX, p.vParticleY, p.vParticleWidth, p.vParticleHeight, r.BLUE)
 
 
-    r.DrawRectangle(s.scanner1X, s.scanner1Y, s.scanner1Width, s.scanner1Height, colorScanner1);
-    r.DrawRectangle(s.scanner2X, s.scanner2Y, s.scanner2Width, s.scanner2Height, colorScanner2)
+    drawScanner(s.scanner1X, s.scanner1Y, s.scanner1Width, s.scanner1Height, s.isScanner1Detect);
+    drawScanner(s.scanner2X, s.scanner2Y, s.scanner2Width, s.scanner2Height, s.isScanner2Detect)
 
 
-    r.DrawRectangle(s.vScannerX, s.vScannerY, s.vScannerWidth, s.vScannerHeight, color_vScanner)
+    drawScanner(s.vScannerX, s.vScannerY, s.vScannerWidth, s.vScannerHeight, s.isvScannerDetect)
 
     r.EndDrawing();
 }
