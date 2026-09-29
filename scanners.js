@@ -1,25 +1,19 @@
-const WIDTH = 710;
-const HEIGHT = 600;
-const partedX = WIDTH / 2;
-
 let scanner1X = 0;
 const scanner1Y = 0;
 const scanner1Width = 50;
-const scanner1Height = HEIGHT;
+let scanner1Height;
 let scanner1Velocity = 1;
 
-
-
-let scanner2X = partedX;
+let scanner2X;
 const scanner2Y = 0;
 const scanner2Width = 50;
-const scanner2Height = HEIGHT;
+let scanner2Height;
 let scanner2Velocity = 3;
 
 
 const vScannerX = 0;
 let vScannerY = 0;
-const vScannerWidth = WIDTH;
+let vScannerWidth;
 const vScannerHeight = 30;
 let vScannerVelocity = 3;
 

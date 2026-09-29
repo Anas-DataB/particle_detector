@@ -1,21 +1,17 @@
-let WIDTH = 710;
-let HEIGHT = 600;
-
-
 const particle1X = 100;
 const particle1Y = 0;
 const particle1Width = 70;
-const particle1Height = HEIGHT;
+let particle1Height;
 
 const particle2X = 400;
 const particle2Y = 0;
 const particle2Width = 50;
-const particle2Height = HEIGHT;
+let particle2Height;
 
 
 const vParticleX = 0;
 const vParticleY = 200;
-const vParticleWidth = WIDTH;
+let vParticleWidth;
 const vParticleHeight = 100;
 
 

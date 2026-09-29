@@ -7,10 +7,6 @@ const WIDTH = 710;
 const HEIGHT = 600;
 const partedX = WIDTH / 2;
 
-let colorScanner1 = r.WHITE;
-let colorScanner2 = r.WHITE;
-let color_vScanner = r.WHITE;
-
 function isParticleDetected(scanner, scannerWidth, particle1x, particle1Width, particle2x, particle2Width) {
     const isPar1InRange = d.isOverlap(particle1x, particle1Width, scanner, scannerWidth);
     const isPar2InRange = d.isOverlap(particle2x, particle2Width, scanner, scannerWidth);
@@ -18,21 +14,26 @@ function isParticleDetected(scanner, scannerWidth, particle1x, particle1Width, p
     return isPar1InRange || isPar2InRange;
 }
 
-function setColor(isdetected) {
-    return isdetected ? r.ColorAlpha(r.RED, 0.7) : r.WHITE;
-}
-
 function running() {
     return !r.WindowShouldClose();
 }
 
 function setup() {
-
     const TITLE = "Particle Detector"
     const FPS = 60;
     r.SetTraceLogLevel(r.LOG_NONE)
     r.InitWindow(WIDTH, HEIGHT, TITLE,)
     r.SetTargetFPS(FPS)
+
+    p.particle1Height = HEIGHT;
+    p.particle2Height = HEIGHT;
+    p.vParticleWidth = WIDTH
+
+    s.scanner1Height = HEIGHT;
+    s.scanner2X = partedX;
+    s.scanner2Height = HEIGHT;
+    s.vScannerWidth = WIDTH;
+
 }
 function move(start, velocity) {
     return start + velocity
@@ -55,12 +56,8 @@ function update() {
 
 }
 function drawScanner(x, y, width, height, isdetected) {
-    if (isdetected) {
-        r.DrawRectangleRounded(r.Rectangle(x, y, width, height), 20, 4, r.RED,);
-    }
-    else {
-        r.DrawRectangle(x, y, width, height, r.ColorAlpha(r.RED, 0.7))
-    }
+
+    isdetected ? r.DrawRectangle(x, y, width, height, r.ColorAlpha(r.RED, 0.7)) : r.DrawRectangle(x, y, width, height, r.WHITE);
 }
 
 function draw() {
