@@ -1,44 +1,62 @@
-let scanner1X = 0;
-const scanner1Y = 0;
-const scanner1Width = 50;
-let scanner1Height;
-let scanner1Velocity = 1;
+function creatScanner() {
+    return {
+        position: {
+            x: 0,
+            y: 0,
+        },
+        size: {
+            width: 0,
+            height: 0,
+        },
+        velocity: 0,
+        hasDetected: false,
+    }
+}
+const s1 = creatScanner();
+const s2 = creatScanner();
+const s3 = creatScanner();
+// const s1 = {
+//     position: {
+//         x: 0,
+//         y: 0,
+//     },
+//     size: {
+//         width: 0,
+//         height: 0,
+//     },
+//     velocity: 0,
+//     hasDetected: false,
+// }
 
-let scanner2X;
-const scanner2Y = 0;
-const scanner2Width = 50;
-let scanner2Height;
-let scanner2Velocity = 3;
+// const s2 = {
+//     position: {
+//         x: 0,
+//         y: 0,
+//     },
+//     size: {
+//         width: 0,
+//         height: 0,
+//     },
+//     velocity: 0,
+//     hasDetected: false,
+// }
 
-
-const vScannerX = 0;
-let vScannerY = 0;
-let vScannerWidth;
-const vScannerHeight = 30;
-let vScannerVelocity = 3;
-
-let isvScannerDetect;
-let isScanner2Detect;
-let isScanner1Detect;
+// const s3 = {
+//     position: {
+//         x: 0,
+//         y: 0,
+//     },
+//     size: {
+//         width: 0,
+//         height: 0,
+//     },
+//     velocity: 0,
+//     hasDetected: false,
+// }
 
 module.exports = {
-    scanner1X,
-    scanner1Y,
-    scanner1Width,
-    scanner1Height,
-    scanner1Velocity,
-    scanner2X,
-    scanner2Y,
-    scanner2Width,
-    scanner2Height,
-    scanner2Velocity,
-    vScannerX,
-    vScannerY,
-    vScannerWidth,
-    vScannerHeight,
-    vScannerVelocity,
-    isvScannerDetect,
-    isScanner2Detect,
-    isScanner1Detect,
+    s1,
+    s2,
+    s3,
 }
 

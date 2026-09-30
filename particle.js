@@ -1,31 +1,52 @@
-const particle1X = 100;
-const particle1Y = 0;
-const particle1Width = 70;
-let particle1Height;
 
-const particle2X = 400;
-const particle2Y = 0;
-const particle2Width = 50;
-let particle2Height;
+function creatField() {
+    return {
+        position: {
+            x: 0,
+            y: 0,
+        },
+        size: {
+            width: 0,
+            height: 0,
+        }
+    }
+}
+const f1 = creatField();
+const f2 = creatField();
+const f3 = creatField();
 
+// const f1 = {
+//     position: {
+//         x: 0,
+//         y: 0,
+//     },
+//     size: {
+//         width: 0,
+//         height: 0,
+//     }
+// }
+// const f2 = {
+//     position: {
+//         x: 0,
+//         y: 0,
+//     },
+//     size: {
+//         width: 0,
+//         height: 0,
+//     }
+// }
 
-const vParticleX = 0;
-const vParticleY = 200;
-let vParticleWidth;
-const vParticleHeight = 100;
-
+// const f3 = {
+//     position: {
+//         x: 0,
+//         y: 0,
+//     },
+//     size: {
+//         width: 0,
+//         height: 0,
+//     }
+// }
 
 module.exports = {
-    particle1X,
-    particle1Y,
-    particle1Width,
-    particle1Height,
-    particle2X,
-    particle2Y,
-    particle2Width,
-    particle2Height,
-    vParticleX,
-    vParticleY,
-    vParticleWidth,
-    vParticleHeight,
+    f1, f2, f3,
 }

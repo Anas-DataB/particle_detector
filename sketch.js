@@ -25,14 +25,41 @@ function setup() {
     r.InitWindow(WIDTH, HEIGHT, TITLE,)
     r.SetTargetFPS(FPS)
 
-    p.particle1Height = HEIGHT;
-    p.particle2Height = HEIGHT;
-    p.vParticleWidth = WIDTH
+    s.s1.position.x = 0;
+    s.s1.position.y = 0;
+    s.s1.size.width = 50;
+    s.s1.size.height = HEIGHT;
+    s.s1.velocity = 3;
+    s.s1.hasDetected = false;
 
-    s.scanner1Height = HEIGHT;
-    s.scanner2X = partedX;
-    s.scanner2Height = HEIGHT;
-    s.vScannerWidth = WIDTH;
+    s.s2.position.x = partedX;
+    s.s2.position.y = 0;
+    s.s2.size.width = 50;
+    s.s2.size.height = HEIGHT;
+    s.s2.velocity = 2;
+    s.s2.hasDetected = false;
+
+    s.s3.position.x = 0;
+    s.s3.position.y = 0;
+    s.s3.size.width = WIDTH;
+    s.s3.size.height = 30;
+    s.s3.velocity = 3;
+    s.s3.hasDetected = false;
+
+    p.f1.position.x = 100;
+    p.f1.position.y = 0;
+    p.f1.size.width = 70;
+    p.f1.size.height = HEIGHT;
+
+    p.f2.position.x = 400;
+    p.f2.position.y = 0;
+    p.f2.size.width = 50;
+    p.f2.size.height = HEIGHT;
+
+    p.f3.position.x = 0;
+    p.f3.position.y = 200;
+    p.f3.size.width = WIDTH
+    p.f3.size.height = 100;
 
 }
 function move(start, velocity) {
@@ -40,19 +67,19 @@ function move(start, velocity) {
 }
 function update() {
 
-    s.scanner1X = move(s.scanner1X, s.scanner1Velocity)
-    s.scanner2X = move(s.scanner2X, s.scanner2Velocity);
+    s.s1.position.x = move(s.s1.position.x, s.s1.velocity)
+    s.s2.position.x = move(s.s2.position.x, s.s2.velocity);
 
-    s.vScannerY = move(s.vScannerY, s.vScannerVelocity);
+    s.s3.position.y = move(s.s3.position.y, s.s3.velocity);
 
-    s.scanner1Velocity = d.setVelocity(s.scanner1X, s.scanner1Width, 0, partedX, s.scanner1Velocity)
-    s.scanner2Velocity = d.setVelocity(s.scanner2X, s.scanner2Width, partedX, WIDTH, s.scanner2Velocity)
+    s.s1.velocity = d.setVelocity(s.s1.position.x, s.s1.size.width, 0, partedX, s.s1.velocity)
+    s.s2.velocity = d.setVelocity(s.s2.position.x, s.s2.size.width, partedX, WIDTH, s.s2.velocity)
 
-    s.vScannerVelocity = d.setVelocity(s.vScannerY, s.vScannerHeight, 0, HEIGHT, s.vScannerVelocity)
+    s.s3.velocity = d.setVelocity(s.s3.position.y, s.s3.size.height, 0, HEIGHT, s.s3.velocity)
 
-    s.isvScannerDetect = d.isOverlap(s.vScannerY, s.vScannerHeight, p.vParticleY, p.vParticleHeight);
-    s.isScanner2Detect = isParticleDetected(s.scanner2X, s.scanner2Width, p.particle1X, p.particle1Width, p.particle2X, p.particle2Width);
-    s.isScanner1Detect = isParticleDetected(s.scanner1X, s.scanner1Width, p.particle1X, p.particle1Width, p.particle2X, p.particle2Width);
+    s.s3.hasDetected = d.isOverlap(s.s3.position.y, s.s3.size.height, p.f3.position.y, p.f3.size.height);
+    s.s2.hasDetected = isParticleDetected(s.s2.position.x, s.s2.size.width, p.f1.position.x, p.f1.size.width, p.f2.position.x, p.f2.size.width);
+    s.s1.hasDetected = isParticleDetected(s.s1.position.x, s.s1.size.width, p.f1.position.x, p.f1.size.width, p.f2.position.x, p.f2.size.width);
 
 }
 function drawScanner(x, y, width, height, isdetected) {
@@ -65,17 +92,17 @@ function draw() {
     r.BeginDrawing();
     r.ClearBackground(r.BLACK)
 
-    r.DrawRectangle(p.particle1X, p.particle1Y, p.particle1Width, p.particle1Height, r.BLUE)
-    r.DrawRectangle(p.particle2X, p.particle2Y, p.particle2Width, p.particle2Height, r.BLUE)
+    r.DrawRectangle(p.f1.position.x, p.f1.position.y, p.f1.size.width, p.f1.size.height, r.BLUE)
+    r.DrawRectangle(p.f2.position.x, p.f2.position.y, p.f2.size.width, p.f2.size.height, r.BLUE)
 
-    r.DrawRectangle(p.vParticleX, p.vParticleY, p.vParticleWidth, p.vParticleHeight, r.BLUE)
-
-
-    drawScanner(s.scanner1X, s.scanner1Y, s.scanner1Width, s.scanner1Height, s.isScanner1Detect);
-    drawScanner(s.scanner2X, s.scanner2Y, s.scanner2Width, s.scanner2Height, s.isScanner2Detect)
+    r.DrawRectangle(p.f3.position.x, p.f3.position.y, p.f3.size.width, p.f3.size.height, r.BLUE)
 
 
-    drawScanner(s.vScannerX, s.vScannerY, s.vScannerWidth, s.vScannerHeight, s.isvScannerDetect)
+    drawScanner(s.s1.position.x, s.s1.position.y, s.s1.size.width, s.s1.size.height, s.s1.hasDetected);
+    drawScanner(s.s2.position.x, s.s2.position.y, s.s2.size.width, s.s2.size.height, s.s2.hasDetected)
+
+
+    drawScanner(s.s3.position.x, s.s3.position.y, s.s3.size.width, s.s3.size.height, s.s3.hasDetected)
 
     r.EndDrawing();
 }
