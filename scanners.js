@@ -1,62 +1,33 @@
-function creatScanner() {
+const r = require("raylib");
+const g = require("./geometry")
+
+function creatScanner(x, y, height, width, velocity, hasDetected, lower, upper) {
     return {
-        position: {
-            x: 0,
-            y: 0,
-        },
-        size: {
-            width: 0,
-            height: 0,
-        },
-        velocity: 0,
-        hasDetected: false,
+        x, y, height, width, velocity, hasDetected, lower, upper
     }
 }
-const s1 = creatScanner();
-const s2 = creatScanner();
-const s3 = creatScanner();
-// const s1 = {
-//     position: {
-//         x: 0,
-//         y: 0,
-//     },
-//     size: {
-//         width: 0,
-//         height: 0,
-//     },
-//     velocity: 0,
-//     hasDetected: false,
-// }
+function draw(detector) {
+    const color = detector.hasDetected ? r.RED : r.WHITE
+    r.DrawRectangle(detector.x, detector.y, detector.width, detector.height, color);
+}
 
-// const s2 = {
-//     position: {
-//         x: 0,
-//         y: 0,
-//     },
-//     size: {
-//         width: 0,
-//         height: 0,
-//     },
-//     velocity: 0,
-//     hasDetected: false,
-// }
+function updateVerticleDetector(d, f) {
+    d.y = g.move(d.y, d.velocity)
+    d.velocity = g.setVelocity(d.y, d.height, d.lower, d.upper, d.velocity)
+    d.hasDetected = g.isOverlap(d.y, d.height, f.y, f.height);
+}
 
-// const s3 = {
-//     position: {
-//         x: 0,
-//         y: 0,
-//     },
-//     size: {
-//         width: 0,
-//         height: 0,
-//     },
-//     velocity: 0,
-//     hasDetected: false,
-// }
+function updateHorizontalDetector(d, f1, f2) {
+
+    d.x = g.move(d.x, d.velocity)
+    d.velocity = g.setVelocity(d.x, d.width, d.lower, d.upper, d.velocity)
+    d.hasDetected = g.isParticlesDetected(d, f1, f2);
+}
 
 module.exports = {
-    s1,
-    s2,
-    s3,
+    creatScanner,
+    draw,
+    updateVerticleDetector,
+    updateHorizontalDetector
 }
 
